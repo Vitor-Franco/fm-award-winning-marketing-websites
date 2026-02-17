@@ -6,6 +6,11 @@ import { TitleSection } from "./title";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
+import { ScrollTrigger, DrawSVGPlugin } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(DrawSVGPlugin);
+
 export default function Page() {
   return (
     <>
@@ -21,12 +26,25 @@ function DescriptionSection() {
 
   useGSAP(
     () => {
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({ 
+        scrollTrigger: {
+          trigger: "h2",
+          start: "top center",
+          end: "bottom center",
+          toggleActions: "play reverse play reset",
+          markers: true,
+        }
+      });
 
       tl.from("h2", {
         opacity: 0,
         duration: 1,
       });
+
+      tl.from("path", {
+        drawSVG: 0,
+        stagger: 0.1
+      })
     },
     {
       scope: containerRef,
@@ -36,7 +54,7 @@ function DescriptionSection() {
   return (
     <div
       ref={containerRef}
-      className="h-screen w-screen p-10 flex items-stretch justify-stretch"
+      className="flex items-stretch w-screen h-screen p-10 justify-stretch"
     >
       <div className="title-container border-2 border-(--line) p-10 w-full flex items-center justify-center">
         <h2 className="text-[6vh] leading-[1.4] text-center text-balance max-w-7xl">
@@ -59,13 +77,13 @@ const ScrollTriggerWord = () => (
   </span>
 );
 const ScrollBasedWord = () => (
-  <span className="whitespace-nowrap relative">
+  <span className="relative whitespace-nowrap">
     <Highlighted2 className="absolute bottom-0 left-0 mix-blend-multiply" />
     scroll-based
   </span>
 );
 const TriggerAnythingWord = () => (
-  <span className="whitespace-nowrap relative">
+  <span className="relative whitespace-nowrap">
     <Highlighted3 className="absolute bottom-0 left-0 mix-blend-multiply" />
     trigger anything
   </span>
