@@ -14,7 +14,7 @@ gsap.registerPlugin(SplitText);
 
 export default function Page() {
   return (
-    <div className="bg-black p-24 relative">
+    <div className="relative p-24 bg-black">
       <div className={cn(s.ruler, "absolute left-0 top-0 h-full w-8")} />
       <div className={cn(s.ruler, "absolute right-0 top-0 h-full w-8")} />
       <Animation />
@@ -26,7 +26,16 @@ function Animation() {
   const containerRef = useRef<HTMLDivElement>(null);
   useGSAP(
     () => {
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          markers: true,
+          pin: ".pinned",
+          scrub: 1,
+          start: "top top",
+          end: "bottom bottom",
+        },
+      });
 
       tl.set(".outline-logo", {
         opacity: 1,
@@ -49,12 +58,12 @@ function Animation() {
   return (
     <div
       ref={containerRef}
-      className="h-screen relative bg-black border border-[#444]"
+      className="h-[300vh] relative bg-black border border-[#444]"
     >
-      <div className="flex h-screen justify-center items-center">
+      <div className="flex items-center justify-center h-screen border border-red-400 pinned">
         <div className="realtive">
-          <OutlineLogo className="outline-logo opacity-0 absolute" />
-          <SolidLogo className="solid-logo opacity-0 relative" />
+          <OutlineLogo className="absolute opacity-0 outline-logo" />
+          <SolidLogo className="relative opacity-0 solid-logo" />
         </div>
       </div>
     </div>
