@@ -43,7 +43,7 @@ export default function Page() {
       opacity: 0,
       duration: 0.01,
       repeat: 10,
-      yoyo: true,
+      yoyo: true, // make a ping-pong with animation, without reset animation in every repeat
       repeatDelay: 0.05,
     }, "<")
 
