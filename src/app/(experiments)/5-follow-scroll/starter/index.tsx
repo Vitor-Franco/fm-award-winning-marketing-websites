@@ -30,8 +30,8 @@ function Animation() {
         scrollTrigger: {
           trigger: containerRef.current,
           markers: true,
-          pin: ".pinned",
-          scrub: 1,
+          pin: ".pinned", // pin element in screen
+          scrub: 1, // animate following scroll
           start: "top top",
           end: "bottom bottom",
         },
